@@ -34,7 +34,7 @@ jobs:
   # ── Lightweight job to compute shared config ─────────────────────────
   config:
     name: Resolve build config
-    runs-on: ubuntu-latest
+    runs-on: {group: ent-default, labels: [self-hosted]}  # estate runner fleet (SOP: ci-runner-always-internal)
     outputs:
       npm_tag: ${{ steps.cfg.outputs.npm_tag }}
       is_release: ${{ steps.cfg.outputs.is_release }}
@@ -42,6 +42,11 @@ jobs:
       push: ${{ steps.cfg.outputs.push }}
     steps:
       - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
 
       - name: Determine build config
         id: cfg

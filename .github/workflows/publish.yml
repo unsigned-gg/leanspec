@@ -20,7 +20,7 @@ jobs:
   # Step 0: Build UI (required before Rust binaries)
   build-ui:
     name: Build UI
-    runs-on: ubuntu-latest
+    runs-on: {group: ent-default, labels: [self-hosted]}  # estate runner fleet (SOP: ci-runner-always-internal)
     steps:
       - uses: actions/checkout@v4
 
@@ -191,7 +191,7 @@ jobs:
   # Step 2: Publish platform-specific packages (MUST happen before main packages)
   publish-platform:
     needs: rust-binaries
-    runs-on: ubuntu-latest
+    runs-on: {group: ent-default, labels: [self-hosted]}  # estate runner fleet (SOP: ci-runner-always-internal)
     permissions:
       contents: read
       id-token: write
@@ -251,7 +251,7 @@ jobs:
   # Step 3: Publish main packages (AFTER platform packages are available)
   publish-main:
     needs: publish-platform
-    runs-on: ubuntu-latest
+    runs-on: {group: ent-default, labels: [self-hosted]}  # estate runner fleet (SOP: ci-runner-always-internal)
     permissions:
       contents: read
       id-token: write

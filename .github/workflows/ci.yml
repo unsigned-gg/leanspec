@@ -8,7 +8,7 @@ on:
 jobs:
   # Node.js/TypeScript build and test
   node:
-    runs-on: ubuntu-latest
+    runs-on: {group: ent-default, labels: [self-hosted]}  # estate runner fleet (SOP: ci-runner-always-internal)
     
     steps:
       - uses: actions/checkout@v4
@@ -59,7 +59,7 @@ jobs:
   # Rust build and test
   rust:
     needs: node  # Ensure UI is built first
-    runs-on: ubuntu-latest
+    runs-on: {group: ent-default, labels: [ci-rust]}  # estate Rust toolchain runner (SOP: ci-runner-always-internal)
     
     steps:
       - uses: actions/checkout@v4
@@ -132,7 +132,7 @@ jobs:
   # New specs must go on GitHub Issues; this job blocks accidental drift.
   freeze-specs:
     name: specs/ freeze guard
-    runs-on: ubuntu-latest
+    runs-on: {group: ent-default, labels: [self-hosted]}  # estate runner fleet (SOP: ci-runner-always-internal)
     steps:
       - uses: actions/checkout@v4
         with:
